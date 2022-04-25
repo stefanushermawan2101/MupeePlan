@@ -28,6 +28,17 @@ class MovieDetailViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        
+        // Customize the navBar
+        navigationController?.navigationBar.tintColor = UIColor(red: 128, green: 0, blue: 0)
+        navigationController?.hidesBarsOnSwipe = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
 }
@@ -57,7 +68,6 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
         default:
             fatalError("Failed to instantiate the table view cell for detail view controller")
         }
-        
-        
     }
+    
 }

@@ -42,13 +42,13 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="hYa-qh-MoD">
                                                     <rect key="frame" x="115" y="0.0" width="229" height="36.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJd-Ui-Ju5">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJd-Ui-Ju5">
                                                             <rect key="frame" x="0.0" y="0.0" width="229" height="17"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWD-dL-U7h">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWD-dL-U7h">
                                                             <rect key="frame" x="0.0" y="22" width="229" height="14.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                             <nil key="textColor"/>
@@ -79,7 +79,9 @@
                             <outlet property="delegate" destination="ryn-u5-o5i" id="F2y-Ch-bCS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Mupee" id="yFd-ra-eDE"/>
+                    <navigationItem key="navigationItem" title="Mupee" id="yFd-ra-eDE">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="w0M-Ic-Ssw"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DsM-uu-QuU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -173,7 +175,7 @@
                         <viewLayoutGuide key="safeArea" id="wkV-EV-erE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Movie" id="I8A-qJ-5Cy"/>
+                    <navigationItem key="navigationItem" title="Movie" leftItemsSupplementBackButton="YES" id="I8A-qJ-5Cy"/>
                     <connections>
                         <outlet property="headerView" destination="VHc-lM-EJU" id="Yz4-gc-zeP"/>
                         <outlet property="tableView" destination="bG9-ap-d9Z" id="4uf-su-STd"/>

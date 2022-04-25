@@ -24,6 +24,16 @@ class MovieTableViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.hidesBarsOnSwipe = true
+        
+        // Customize the navBar
+//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 128.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)]
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.hidesBarsOnSwipe = true
     }
 
     // MARK: - Table view data source
@@ -48,6 +58,7 @@ class MovieTableViewController: UITableViewController {
         cell.movieImageView.image = UIImage(named:  movies[indexPath.row].image)
         
         cell.accessoryType = movies[indexPath.row].isWatched ?  .checkmark : .none
+        cell.tintColor = UIColor(red: 128, green: 0, blue: 0)
 
         return cell
     }
@@ -79,10 +90,10 @@ class MovieTableViewController: UITableViewController {
             completionHandler(true)
         }
         
-        deleteAction.backgroundColor = UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
+        deleteAction.backgroundColor = UIColor(red: 231, green: 76, blue: 60)
         deleteAction.image = UIImage(named: "delete")
         
-        shareAction.backgroundColor = UIColor(red: 254.0/255.0, green: 149.0/255.0, blue: 38.0/255.0, alpha: 1.0)
+        shareAction.backgroundColor = UIColor(red: 254, green: 149, blue: 38)
         shareAction.image = UIImage(named: "share")
         
         let swipeCofiguration = UISwipeActionsConfiguration(actions: [deleteAction, shareAction])
@@ -95,10 +106,11 @@ class MovieTableViewController: UITableViewController {
             let cell = tableView.cellForRow(at: indexPath) as! MovieTableViewCell
             self.movies[indexPath.row].isWatched = (self.movies[indexPath.row].isWatched) ? false : true
             cell.accessoryType = (self.movies[indexPath.row].isWatched) ? .checkmark : .none
+            cell.tintColor = UIColor(red: 128, green: 0, blue: 0)
             completionHandler(true)
         }
         
-        checkInAction.backgroundColor = UIColor(red: 39.0/255.0, green: 174.0/255.0, blue: 96.0/255.0, alpha: 1.0)
+        checkInAction.backgroundColor = UIColor(red: 39, green: 174, blue: 96)
         checkInAction.image = self.movies[indexPath.row].isWatched ? UIImage(named: "undo") : UIImage(named: "tick")
         let swipeCofiguration = UISwipeActionsConfiguration(actions: [checkInAction])
         
