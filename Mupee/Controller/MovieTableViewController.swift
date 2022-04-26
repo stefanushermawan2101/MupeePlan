@@ -8,7 +8,13 @@
 import UIKit
 import CoreData
 
-class MovieTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class MovieTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
+    
+    
+    
+    var searchController: UISearchController!
+    
+    var searchResult: [MovieMO] = []
     
     var fetchResultController: NSFetchedResultsController<MovieMO>!
     
@@ -25,7 +31,7 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
         
         // Fetch data from data store
         let fetchRequest: NSFetchRequest<MovieMO> = MovieMO.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "isWatched", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
@@ -42,6 +48,20 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
                 print(error)
             }
         }
+        
+        // Search bar method
+        searchController = UISearchController(searchResultsController: nil)
+//        self.navigationItem.searchController = searchController
+        tableView.tableHeaderView = searchController.searchBar
+        searchController.searchBar.tintColor = UIColor(red: 128, green: 0, blue: 0)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        // Customize search bar
+        searchController.searchBar.placeholder = "Search movies..."
+        searchController.searchBar.barTintColor = .white
+        searchController.searchBar.backgroundImage = UIImage()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +79,13 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return movies.count
+        
+        if searchController.isActive {
+            return searchResult.count
+        }else {
+            return movies.count
+        }
+        
     }
 
     
@@ -67,20 +93,32 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! MovieTableViewCell
         
-        cell.titleLabel.text = movies[indexPath.row].title
-        cell.descriptionLabel.text = movies[indexPath.row].summary
+        // Determine if we get the movie from search result or the original array
+        let movie = searchController.isActive ? searchResult[indexPath.row] : movies[indexPath.row]
         
-        if let movieImage = movies[indexPath.row].image {
+        // Configure the cell
+        cell.titleLabel.text = movie.title
+        cell.descriptionLabel.text = movie.summary
+        
+        if let movieImage = movie.image {
             cell.movieImageView.image = UIImage(data: movieImage as Data)
         }
         
-        cell.accessoryType = movies[indexPath.row].isWatched ?  .checkmark : .none
+        cell.accessoryType = movie.isWatched ?  .checkmark : .none
         cell.tintColor = UIColor(red: 128, green: 0, blue: 0)
 
         return cell
     }
     
     //MARK: - UITableViewDelegate Protocol
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if searchController.isActive {
+            return false
+        }else {
+            return true
+        }
+    }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { action, sourceView, completionHandler in
@@ -182,7 +220,7 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
         if segue.identifier == "showMovieDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let destinationController = segue.destination as! MovieDetailViewController
-                destinationController.movie = movies[indexPath.row]
+                destinationController.movie = (searchController.isActive) ? searchResult[indexPath.row] : movies[indexPath.row]
             }
         }
     }
@@ -221,6 +259,25 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
+    }
+    
+    //MARK: - SearchBar Methods
+    func filterContent(for searchText: String) {
+        searchResult = movies.filter({ movie in
+            if let title = movie.title {
+                let isMatch = title.localizedCaseInsensitiveContains(searchText)
+                return isMatch
+            }else {
+                return false
+            }
+        })
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            filterContent(for: searchText)
+            tableView.reloadData()
+        }
     }
 
 }
