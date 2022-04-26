@@ -31,7 +31,7 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
         
         // Fetch data from data store
         let fetchRequest: NSFetchRequest<MovieMO> = MovieMO.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "isWatched", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "isWatched", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
