@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7272267D28179A8B001BE822 /* RoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7272267C28179A8B001BE822 /* RoundedTextField.swift */; };
+		7272267F28179EDF001BE822 /* NewMovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7272267E28179EDF001BE822 /* NewMovieController.swift */; };
 		7278A0C328164E8100B7B1F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7278A0C228164E8100B7B1F7 /* AppDelegate.swift */; };
 		7278A0C528164E8100B7B1F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7278A0C428164E8100B7B1F7 /* SceneDelegate.swift */; };
 		7278A0CA28164E8100B7B1F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7278A0C828164E8100B7B1F7 /* Main.storyboard */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7272267C28179A8B001BE822 /* RoundedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextField.swift; sourceTree = "<group>"; };
+		7272267E28179EDF001BE822 /* NewMovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMovieController.swift; sourceTree = "<group>"; };
 		7278A0BF28164E8100B7B1F7 /* Mupee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mupee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7278A0C228164E8100B7B1F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7278A0C428164E8100B7B1F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 			children = (
 				7278A0D6281681AD00B7B1F7 /* MovieTableViewController.swift */,
 				7278A0DA2816D5E400B7B1F7 /* MovieDetailViewController.swift */,
+				7272267E28179EDF001BE822 /* NewMovieController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -99,6 +104,7 @@
 				7278A0E52816E9AD00B7B1F7 /* MovieDetailIconTextCell.swift */,
 				7278A0E32816E4C900B7B1F7 /* MovieDetailHeaderView.swift */,
 				7278A0D82816886B00B7B1F7 /* MovieTableViewCell.swift */,
+				7272267C28179A8B001BE822 /* RoundedTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -200,12 +206,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7278A0C328164E8100B7B1F7 /* AppDelegate.swift in Sources */,
+				7272267F28179EDF001BE822 /* NewMovieController.swift in Sources */,
 				7278A0E62816E9AD00B7B1F7 /* MovieDetailIconTextCell.swift in Sources */,
 				7278A0DB2816D5E400B7B1F7 /* MovieDetailViewController.swift in Sources */,
 				7278A0E42816E4C900B7B1F7 /* MovieDetailHeaderView.swift in Sources */,
 				7278A0DD2816DA1D00B7B1F7 /* Movie.swift in Sources */,
 				7278A0E82816EB3F00B7B1F7 /* MovieDetailTextCell.swift in Sources */,
 				7278A0C528164E8100B7B1F7 /* SceneDelegate.swift in Sources */,
+				7272267D28179A8B001BE822 /* RoundedTextField.swift in Sources */,
 				7278A0EB2816F82500B7B1F7 /* UIColor+Ext.swift in Sources */,
 				7278A0D92816886B00B7B1F7 /* MovieTableViewCell.swift in Sources */,
 				7278A0D7281681AD00B7B1F7 /* MovieTableViewController.swift in Sources */,
@@ -355,6 +363,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 58LNBVCQG4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Mupee/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -382,6 +391,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 58LNBVCQG4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Mupee/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
