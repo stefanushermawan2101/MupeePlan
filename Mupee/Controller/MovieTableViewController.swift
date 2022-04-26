@@ -161,11 +161,16 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
         let checkInAction = UIContextualAction(style: .normal, title: "Watch") { action, sourceView, completionHandler in
-            let cell = tableView.cellForRow(at: indexPath) as! MovieTableViewCell
-            self.movies[indexPath.row].isWatched = (self.movies[indexPath.row].isWatched) ? false : true
-            cell.accessoryType = (self.movies[indexPath.row].isWatched) ? .checkmark : .none
-            cell.tintColor = UIColor(red: 128, green: 0, blue: 0)
+            if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+                let cell = tableView.cellForRow(at: indexPath) as! MovieTableViewCell
+                self.movies[indexPath.row].isWatched = (self.movies[indexPath.row].isWatched) ? false : true
+                cell.accessoryType = (self.movies[indexPath.row].isWatched) ? .checkmark : .none
+                cell.tintColor = UIColor(red: 128, green: 0, blue: 0)
+                appDelegate.saveContext()
+            }
+            
             completionHandler(true)
         }
         
