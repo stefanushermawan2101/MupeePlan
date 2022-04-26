@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7272267D28179A8B001BE822 /* RoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7272267C28179A8B001BE822 /* RoundedTextField.swift */; };
 		7272267F28179EDF001BE822 /* NewMovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7272267E28179EDF001BE822 /* NewMovieController.swift */; };
+		727226822817EC09001BE822 /* Mupee.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 727226802817EC09001BE822 /* Mupee.xcdatamodeld */; };
 		7278A0C328164E8100B7B1F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7278A0C228164E8100B7B1F7 /* AppDelegate.swift */; };
 		7278A0C528164E8100B7B1F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7278A0C428164E8100B7B1F7 /* SceneDelegate.swift */; };
 		7278A0CA28164E8100B7B1F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7278A0C828164E8100B7B1F7 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		7272267C28179A8B001BE822 /* RoundedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextField.swift; sourceTree = "<group>"; };
 		7272267E28179EDF001BE822 /* NewMovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMovieController.swift; sourceTree = "<group>"; };
+		727226812817EC09001BE822 /* Mupee.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Mupee.xcdatamodel; sourceTree = "<group>"; };
 		7278A0BF28164E8100B7B1F7 /* Mupee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mupee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7278A0C228164E8100B7B1F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7278A0C428164E8100B7B1F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				7278A0C428164E8100B7B1F7 /* SceneDelegate.swift */,
 				7278A0CB28164E8300B7B1F7 /* Assets.xcassets */,
 				7278A0D028164E8300B7B1F7 /* Info.plist */,
+				727226802817EC09001BE822 /* Mupee.xcdatamodeld */,
 			);
 			path = Mupee;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				7278A0E42816E4C900B7B1F7 /* MovieDetailHeaderView.swift in Sources */,
 				7278A0DD2816DA1D00B7B1F7 /* Movie.swift in Sources */,
 				7278A0E82816EB3F00B7B1F7 /* MovieDetailTextCell.swift in Sources */,
+				727226822817EC09001BE822 /* Mupee.xcdatamodeld in Sources */,
 				7278A0C528164E8100B7B1F7 /* SceneDelegate.swift in Sources */,
 				7272267D28179A8B001BE822 /* RoundedTextField.swift in Sources */,
 				7278A0EB2816F82500B7B1F7 /* UIColor+Ext.swift in Sources */,
@@ -434,6 +438,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		727226802817EC09001BE822 /* Mupee.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				727226812817EC09001BE822 /* Mupee.xcdatamodel */,
+			);
+			currentVersion = 727226812817EC09001BE822 /* Mupee.xcdatamodel */;
+			path = Mupee.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7278A0B728164E8100B7B1F7 /* Project object */;
 }

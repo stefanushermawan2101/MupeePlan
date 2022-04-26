@@ -9,19 +9,19 @@ import Foundation
 
 class Movie {
     var title: String
-    var description: String
+    var summary: String
     var image: String
     var isWatched: Bool
     
-    init(title: String, description: String, image: String, isWatched: Bool) {
+    init(title: String, summary: String, image: String, isWatched: Bool) {
         self.title = title
-        self.description = description
+        self.summary = summary
         self.image = image
         self.isWatched = isWatched
     }
     
     convenience init() {
-        self.init(title: "", description: "", image: "", isWatched: false)
+        self.init(title: "", summary: "", image: "", isWatched: false)
     }
     
     

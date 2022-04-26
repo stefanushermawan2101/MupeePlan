@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import CoreData
 
 class NewMovieController: UITableViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    var movie: MovieMO!
     
     @IBOutlet var titleTextField: RoundedTextField! {
         didSet {
@@ -26,6 +29,31 @@ class NewMovieController: UITableViewController, UITextFieldDelegate, UIImagePic
     }
     
     @IBOutlet var photoImageView: UIImageView!
+    
+    @IBAction func saveButtonTapped(sender: AnyObject) {
+        if titleTextField.text == "" || descriptionTextView.text == "" {
+            let alertController = UIAlertController(title: "Oops", message: "We can't proceed because one of the fields is blank. Please note that all fields are required!", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(alertAction)
+            
+            present(alertController, animated: true, completion: nil)
+            return
+        }
+        
+        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+            movie = MovieMO(context: appDelegate.persistentContainer.viewContext)
+            movie.title = titleTextField.text
+            movie.summary = descriptionTextView.text
+            movie.isWatched = false
+            
+            if let movieImage = photoImageView.image {
+                movie.image = movieImage.pngData()
+            }
+            print("Saving data to context...")
+            appDelegate.saveContext()
+        }
+        dismiss(animated: true, completion: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

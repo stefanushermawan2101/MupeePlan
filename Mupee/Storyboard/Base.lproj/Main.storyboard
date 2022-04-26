@@ -206,6 +206,9 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="Zyb-xS-BlE">
                             <color key="tintColor" red="0.50196078430000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="saveButtonTappedWithSender:" destination="OQg-tW-Dfy" id="DI3-VV-2mX"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

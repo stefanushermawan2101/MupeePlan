@@ -6,17 +6,14 @@
 //
 
 import UIKit
+import CoreData
 
-class MovieTableViewController: UITableViewController {
+class MovieTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
-    var movies: [Movie] = [
-        Movie(title: "Doctor Stange", description: "Mau nonton minggu depan bareng bebeb tanggal 1 Mei", image: "doctorStrange", isWatched: false),
-        Movie(title: "Spiderman No Way Home", description: "Nonton maraton setelah Doctor Strange", image: "spidermanNoWayHome", isWatched: false),
-        Movie(title: "The Wolverine", description: "Nonton malem ini jam 7 sendiri sambil makan Indomie", image: "theWolverine", isWatched: false),
-        Movie(title: "Captain America", description: "Besok malem jam 8 nonton sebelum tidur", image: "captainAmerica", isWatched: false),
-        Movie(title: "Deadpool", description: "Nonton malem minggu besok 23 April bareng temen SMA di Zoom", image: "deadpool", isWatched: false),
-        Movie(title: "Deadpool 2", description: "Nonton setelah Deadpool 1 (maraton bareng temen SMA)", image: "deadpool2", isWatched: false)
-    ]
+    var fetchResultController: NSFetchedResultsController<MovieMO>!
+    
+    //array untuk nampung hasil fetch dari core data
+    var movies: [MovieMO] = []
     
     //MARK: - View Controller Life Cycle
 
@@ -26,8 +23,25 @@ class MovieTableViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.hidesBarsOnSwipe = true
         
-        // Customize the navBar
-//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 128.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)]
+        // Fetch data from data store
+        let fetchRequest: NSFetchRequest<MovieMO> = MovieMO.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+            let context = appDelegate.persistentContainer.viewContext
+            fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            fetchResultController.delegate = self
+            
+            do {
+                try fetchResultController.performFetch()
+                if let fetchedObjects = fetchResultController.fetchedObjects {
+                    movies = fetchedObjects
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,8 +68,11 @@ class MovieTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! MovieTableViewCell
         
         cell.titleLabel.text = movies[indexPath.row].title
-        cell.descriptionLabel.text = movies[indexPath.row].description
-        cell.movieImageView.image = UIImage(named:  movies[indexPath.row].image)
+        cell.descriptionLabel.text = movies[indexPath.row].summary
+        
+        if let movieImage = movies[indexPath.row].image {
+            cell.movieImageView.image = UIImage(data: movieImage as Data)
+        }
         
         cell.accessoryType = movies[indexPath.row].isWatched ?  .checkmark : .none
         cell.tintColor = UIColor(red: 128, green: 0, blue: 0)
@@ -68,19 +85,23 @@ class MovieTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { action, sourceView, completionHandler in
             //Delete the row from datasource
-            self.movies.remove(at: indexPath.row)
-            
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+                let context = appDelegate.persistentContainer.viewContext
+                let movieToDelete = self.fetchResultController.object(at: indexPath)
+                
+                context.delete(movieToDelete)
+                appDelegate.saveContext()
+            }
             
             //Call completion handler to dismiss the action button
             completionHandler(true)
         }
         
         let shareAction = UIContextualAction(style: .normal, title: "Share") { action, sourceView, completionHandler in
-            let defaultText = "Don't forget to watch " + self.movies[indexPath.row].title
+            let defaultText = "Don't forget to watch " + self.movies[indexPath.row].title!
             let activityController: UIActivityViewController
             
-            if let imageToShare = UIImage(named: self.movies[indexPath.row].image) {
+            if let movieImage = self.movies[indexPath.row].image, let imageToShare = UIImage(data: movieImage as Data){
                 activityController = UIActivityViewController(activityItems: [defaultText, imageToShare], applicationActivities: nil)
             }else {
                 activityController = UIActivityViewController(activityItems: [defaultText], applicationActivities: nil)
@@ -170,5 +191,36 @@ class MovieTableViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    //MARK: - Fetch Request Methods
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .fade)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        case .update:
+            if let indexPath = indexPath {
+                tableView.reloadRows(at: [indexPath], with: .fade)
+            }
+        default:
+            tableView.reloadData()
+        }
+        if let fetchedObjects = controller.fetchedObjects {
+            movies = fetchedObjects as! [MovieMO]
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
 
 }

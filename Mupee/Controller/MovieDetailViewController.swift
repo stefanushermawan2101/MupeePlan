@@ -13,7 +13,7 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var headerView: MovieDetailHeaderView!
     
-    var movie: Movie = Movie()
+    var movie: MovieMO!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,9 @@ class MovieDetailViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         
         // Configure the header view
-        headerView.headerImageView.image = UIImage(named: movie.image)
+        if let movieImage = movie.image {
+            headerView.headerImageView.image = UIImage(data: movieImage as Data)
+        }
         
         // Configure the table view
         tableView.delegate = self
@@ -62,12 +64,12 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MovieDetailTextCell.self), for: indexPath) as! MovieDetailTextCell
-            cell.descriptionLabel.text = movie.description
+            cell.descriptionLabel.text = movie.summary
             
             return cell
         default:
             fatalError("Failed to instantiate the table view cell for detail view controller")
         }
     }
-    
+     
 }
