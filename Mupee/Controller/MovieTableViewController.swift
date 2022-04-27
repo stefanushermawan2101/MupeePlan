@@ -18,7 +18,7 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
     
     var fetchResultController: NSFetchedResultsController<MovieMO>!
     
-    //array untuk nampung hasil fetch dari core data
+    //array untuk nampung hasil fetch dari core data //
     var movies: [MovieMO] = []
     
     //MARK: - View Controller Life Cycle
