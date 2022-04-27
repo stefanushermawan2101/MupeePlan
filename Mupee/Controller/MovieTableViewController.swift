@@ -161,6 +161,8 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
                     appDelegate.saveContext()
                 }
                 
+                saveButton.setValue(UIColor(red: 128, green: 0, blue: 0), forKey: "titleTextColor")
+            
                 // Add button
                 alert.addAction(saveButton)
                 
@@ -380,3 +382,4 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
     }
 
 }
+
