@@ -138,6 +138,41 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
             completionHandler(true)
         }
         
+        let editAction = UIContextualAction(style: .destructive, title: "Edit") { action, sourceView, completionHandler in
+            //Delete the row from datasource
+            if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+                let context = appDelegate.persistentContainer.viewContext
+                let movieToEdit = self.fetchResultController.object(at: indexPath)
+                
+                // create alert controller
+                let alert = UIAlertController(title: "Edit Movie", message: "Edit Description", preferredStyle: .alert)
+                alert.addTextField()
+                
+                // munculin description sebelumnya
+                let textField = alert.textFields![0]
+                textField.text = movieToEdit.summary
+                
+                // alert action
+                let saveButton = UIAlertAction(title: "Save", style: .default) { action in
+                    let textField = alert.textFields![0]
+                    movieToEdit.summary = textField.text
+                    
+                    //save hasil editan
+                    appDelegate.saveContext()
+                }
+                
+                // Add button
+                alert.addAction(saveButton)
+                
+                // Show alert
+                self.present(alert, animated: true)
+            }
+            
+            
+            //Call completion handler to dismiss the action button
+            completionHandler(true)
+        }
+        
         let shareAction = UIContextualAction(style: .normal, title: "Share") { action, sourceView, completionHandler in
             let defaultText = "Don't forget to watch " + self.movies[indexPath.row].title!
             let activityController: UIActivityViewController
@@ -155,10 +190,13 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
         deleteAction.backgroundColor = UIColor(red: 231, green: 76, blue: 60)
         deleteAction.image = UIImage(named: "delete")
         
+        editAction.backgroundColor = UIColor(red: 30, green: 145, blue: 255)
+        editAction.image = UIImage(named: "edit")
+        
         shareAction.backgroundColor = UIColor(red: 254, green: 149, blue: 38)
         shareAction.image = UIImage(named: "share")
         
-        let swipeCofiguration = UISwipeActionsConfiguration(actions: [deleteAction, shareAction])
+        let swipeCofiguration = UISwipeActionsConfiguration(actions: [deleteAction, editAction, shareAction])
         
         return swipeCofiguration
     }
