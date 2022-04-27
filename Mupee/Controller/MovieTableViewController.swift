@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 class MovieTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
     
@@ -61,6 +62,9 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
         searchController.searchBar.placeholder = "Search movies..."
         searchController.searchBar.barTintColor = .white
         searchController.searchBar.backgroundImage = UIImage()
+        
+        //notifications
+        prepareNotification()
         
     }
     
@@ -283,6 +287,59 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
             filterContent(for: searchText)
             tableView.reloadData()
         }
+    }
+    
+    //MARK: - Notification
+    
+    func prepareNotification() {
+        //Make sure the movie arr is not empty
+        if movies.count == 0 {
+            return
+        }
+        
+        //pick movie randomly
+        let randomNum = Int(arc4random_uniform(UInt32(movies.count)))
+        if movies[randomNum].isWatched == false {
+            let suggestedMovie = movies[randomNum]
+            //create the user notif
+            let content = UNMutableNotificationContent()
+            content.title = "Movie You Haven't Watched"
+            content.subtitle = ""
+            content.body = "Don't forget to watch \(suggestedMovie.title!)"
+            content.sound = UNNotificationSound.default
+            
+            //attachment
+            let tempDirURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+            let tempFileURL = tempDirURL.appendingPathComponent("suggested-movie.jpg")
+            
+            if let image = UIImage(data: suggestedMovie.image! as Data) {
+                try? image.jpegData(compressionQuality: 1.0)?.write(to: tempFileURL)
+                if let movieImage = try? UNNotificationAttachment(identifier: "movieImage", url: tempFileURL, options: nil) {
+                    content.attachments = [movieImage]
+                }
+            }
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+            let request = UNNotificationRequest(identifier: "mupee.movieSuggesion", content: content, trigger: trigger)
+            
+            //Schedule the notif
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        }else {
+            let suggestedMovie = movies[randomNum]
+            //create the user notif
+            let content = UNMutableNotificationContent()
+            content.title = "Movie You Haven't Watched"
+            content.subtitle = ""
+            content.body = "Don't forget to watch your movie"
+            content.sound = UNNotificationSound.default
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+            let request = UNNotificationRequest(identifier: "mupee.movieSuggesion", content: content, trigger: trigger)
+            
+            //Schedule the notif
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        }
+        
     }
 
 }
