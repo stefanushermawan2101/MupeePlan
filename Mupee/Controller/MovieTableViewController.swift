@@ -12,7 +12,6 @@ import UserNotifications
 class MovieTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
     
     
-    
     var searchController: UISearchController!
     
     var searchResult: [MovieMO] = []
