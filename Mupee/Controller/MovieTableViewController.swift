@@ -51,8 +51,8 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
         
         // Search bar method
         searchController = UISearchController(searchResultsController: nil)
-//        self.navigationItem.searchController = searchController
-        tableView.tableHeaderView = searchController.searchBar
+        self.navigationItem.searchController = searchController
+//        tableView.tableHeaderView = searchController.searchBar
         searchController.searchBar.tintColor = UIColor(red: 128, green: 0, blue: 0)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -179,11 +179,13 @@ class MovieTableViewController: UITableViewController, NSFetchedResultsControlle
             let defaultText = "Don't forget to watch " + self.movies[indexPath.row].title!
             let activityController: UIActivityViewController
             
-            if let movieImage = self.movies[indexPath.row].image, let imageToShare = UIImage(data: movieImage as Data){
-                activityController = UIActivityViewController(activityItems: [defaultText, imageToShare], applicationActivities: nil)
-            }else {
-                activityController = UIActivityViewController(activityItems: [defaultText], applicationActivities: nil)
-            }
+//            if let movieImage = self.movies[indexPath.row].image, let imageToShare = UIImage(data: movieImage as Data){
+//                activityController = UIActivityViewController(activityItems: [defaultText, imageToShare], applicationActivities: nil)
+//            }else {
+//                activityController = UIActivityViewController(activityItems: [defaultText], applicationActivities: nil)
+//            }
+            
+            activityController = UIActivityViewController(activityItems: [defaultText], applicationActivities: nil)
             
             self.present(activityController, animated: true, completion: nil)
             completionHandler(true)
